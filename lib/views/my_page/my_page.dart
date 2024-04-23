@@ -12,7 +12,7 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? myUserEmail = FirebaseAuth.instance.currentUser!.email;
-    final String? myUserId = FirebaseAuth.instance.currentUser!.uid;
+    final String myUserId = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -52,7 +52,7 @@ class MyPage extends StatelessWidget {
                 }
                 final DocumentSnapshot<Map<String, dynamic>>? documentSnapshot =
                     snapshot.data;
-                final Map<String, dynamic>? userDataMap =
+                final Map<String, dynamic> userDataMap =
                     documentSnapshot!.data()!;
                 final UserData userData = UserData.fromJson(userDataMap!);
 
@@ -68,11 +68,14 @@ class MyPage extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       )
-                    else
-                      Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.deepPurple,
+                    else // imageUrlが空文字だったら
+                      ClipOval(
+                        child: Image.asset(
+                          'assets/images/default_user_icon.png',
+                          width: 200,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     MarginSizedBox.mediumHeightMargin,
                     Text(
