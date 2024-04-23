@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>ユーザーアイコンの設定に使用するためにカメラロールのリクエストをしています</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires to add file to your camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app requires to add file to your photo library your microphone</string>
 </dict>
 </plist>
