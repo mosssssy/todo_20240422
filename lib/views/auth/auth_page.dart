@@ -134,6 +134,12 @@ class AuthPage extends StatelessWidget {
                           .user;
                       if (user != null) {
                         print('ログイン成功');
+                        FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(user.uid)
+                            .update({
+                          'updatedAt': DateTime.now(),
+                        });
                       } else {
                         print('ログイン失敗');
                         showCloseOnlyDialog(
