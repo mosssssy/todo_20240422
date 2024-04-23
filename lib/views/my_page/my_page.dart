@@ -5,6 +5,7 @@ import 'package:todo_20240422/common_widget/custom_font_size.dart';
 import 'package:todo_20240422/common_widget/margin_sizedbox.dart';
 import 'package:todo_20240422/data_models/user_data/userdata.dart';
 import 'package:todo_20240422/views/my_page/components/blue_button.dart';
+import 'package:todo_20240422/views/my_page/edit_profile/edit_profile_page.dart';
 
 class MyPage extends StatelessWidget {
   const MyPage({super.key});
@@ -106,6 +107,12 @@ class MyPage extends StatelessWidget {
                       buttonText: 'プロフィール編集',
                       onBlueButtonPressed: () {
                         print('プロフィール編集');
+                        // 1) 指定した画面に遷移する
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return EditProfilePage(userName: userData.userName);
+                          // 2) 実際に表示するページを指定する
+                        }));
                       },
                     ),
                   ],
