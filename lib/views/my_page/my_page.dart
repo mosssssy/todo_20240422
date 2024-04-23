@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyPage extends StatelessWidget {
@@ -14,6 +15,17 @@ class MyPage extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.deepPurple,
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                print('ログアウトしました');
+              },
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.white,
+              ))
+        ],
       ),
     );
   }
