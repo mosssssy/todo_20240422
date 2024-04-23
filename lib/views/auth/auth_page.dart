@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_20240422/common_widget/close_only_dialog.dart';
 import 'package:todo_20240422/common_widget/margin_sizedbox.dart';
 import 'package:todo_20240422/views/auth/components/auth_text_form_field.dart';
+import 'package:todo_20240422/main.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -41,7 +42,7 @@ class AuthPage extends StatelessWidget {
               MarginSizedBox.bigHeightMargin,
               ElevatedButton(
                   onPressed: () async {
-                    if (formkey.currentState!.validate()) {
+                    if (formkey.currentState!.validate() == false) {
                       // 失敗時に処理ストップ
                       return;
                     }
@@ -56,10 +57,9 @@ class AuthPage extends StatelessWidget {
                         print('ユーザーを登録しました');
                       } else {
                         showCloseOnlyDialog(
-                            context, '予期せぬエラーが出ました。\n再度やり直してください。');
+                            context, '予期せぬエラーが出ました。\nやり直してください。');
                       }
                     } on FirebaseAuthException catch (error) {
-                      print(error.code);
                       if (error.code == 'invalid-email') {
                         print('メールアドレスの形式ではありません');
                         showCloseOnlyDialog(context, 'メールアドレスの形式ではありません');
@@ -74,8 +74,7 @@ class AuthPage extends StatelessWidget {
                       }
                     } catch (error) {
                       print('予期せぬエラーです');
-                      showCloseOnlyDialog(
-                          context, '予期せぬエラーが出ました。\n再度やり直してください。');
+                      showCloseOnlyDialog(context, '予期せぬエラーが出ました。\nやり直してください。');
                     }
                   },
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
@@ -86,7 +85,7 @@ class AuthPage extends StatelessWidget {
               MarginSizedBox.smallHeightMargin,
               ElevatedButton(
                   onPressed: () async {
-                    if (!formkey.currentState!.validate()) {
+                    if (formkey.currentState!.validate() == false) {
                       return;
                     }
                     try {
