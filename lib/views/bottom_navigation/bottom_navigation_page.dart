@@ -16,7 +16,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
     const MyDoneTaskListPage(),
     const MyPage(),
   ];
-  int currentIndex = 0;
+  int currentIndex = 2; // あとで0に修正
 
   @override
   Widget build(BuildContext context) {

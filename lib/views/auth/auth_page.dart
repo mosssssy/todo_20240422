@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_20240422/common_widget/close_only_dialog.dart';
@@ -67,6 +68,16 @@ class AuthPage extends StatelessWidget {
                           .user;
                       if (user != null) {
                         print('ユーザーを登録しました');
+                        // FirebaseStore に userドキュメントを作成
+                        FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(user.uid)
+                            .set({
+                          'userName': '',
+                          'imageUrl': '',
+                          'createdAt': DateTime.now(),
+                          'updatedAt': DateTime.now(),
+                        });
                         AlertDialog(
                           title: const Text("会員登録成功"),
                           content: const Text('ユーザーを登録しました'),
