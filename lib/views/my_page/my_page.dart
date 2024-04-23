@@ -110,7 +110,10 @@ class MyPage extends StatelessWidget {
                         // 1) 指定した画面に遷移する
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return EditProfilePage(userName: userData.userName);
+                          return EditProfilePage(
+                            userName: userData.userName,
+                            imageUrl: userData.imageUrl,
+                          );
                           // 2) 実際に表示するページを指定する
                         }));
                       },
