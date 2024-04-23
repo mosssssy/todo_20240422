@@ -4,6 +4,7 @@ import 'package:todo_20240422/common_widget/close_only_dialog.dart';
 import 'package:todo_20240422/common_widget/margin_sizedbox.dart';
 import 'package:todo_20240422/views/auth/components/auth_text_form_field.dart';
 import 'package:todo_20240422/main.dart';
+import 'package:todo_20240422/views/auth/password_reminder_page.dart';
 import 'package:todo_20240422/views/bottom_navigation/bottom_navigation_page.dart';
 
 class AuthPage extends StatelessWidget {
@@ -32,12 +33,22 @@ class AuthPage extends StatelessWidget {
                 controller: passController,
                 label: 'パスワード',
               ),
-              const SizedBox(
+              SizedBox(
                 width: double.infinity,
-                child: Text(
-                  'パスワードを忘れた方はこちら >',
-                  style: TextStyle(color: Colors.deepPurple),
-                  textAlign: TextAlign.end,
+                child: InkWell(
+                  onTap: () {
+                    // 1) 指定した画面に遷移する
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const PasswordReminderPage();
+                      // 2) 実際に表示するページを指定する
+                    }));
+                  },
+                  child: const Text(
+                    'パスワードを忘れた方はこちら >',
+                    style: TextStyle(color: Colors.deepPurple),
+                    textAlign: TextAlign.end,
+                  ),
                 ),
               ),
               MarginSizedBox.bigHeightMargin,
@@ -56,7 +67,18 @@ class AuthPage extends StatelessWidget {
                           .user;
                       if (user != null) {
                         print('ユーザーを登録しました');
-                        showCloseOnlyDialog(context, 'ユーザーを登録しました');
+                        AlertDialog(
+                          title: const Text("会員登録成功"),
+                          content: const Text('ユーザーを登録しました'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text("close"),
+                            )
+                          ],
+                        );
                       } else {
                         showCloseOnlyDialog(
                             context, '予期せぬエラーが出ました。\nやり直してください。');
@@ -101,12 +123,6 @@ class AuthPage extends StatelessWidget {
                           .user;
                       if (user != null) {
                         print('ログイン成功');
-                        // 1) 指定した画面に遷移する
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const BottomNavigationPage();
-                          // 2) 実際に表示するページを指定する
-                        }));
                       } else {
                         print('ログイン失敗');
                         showCloseOnlyDialog(
