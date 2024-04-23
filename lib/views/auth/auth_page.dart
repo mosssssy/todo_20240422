@@ -4,6 +4,7 @@ import 'package:todo_20240422/common_widget/close_only_dialog.dart';
 import 'package:todo_20240422/common_widget/margin_sizedbox.dart';
 import 'package:todo_20240422/views/auth/components/auth_text_form_field.dart';
 import 'package:todo_20240422/main.dart';
+import 'package:todo_20240422/views/bottom_navigation/bottom_navigation_page.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -35,7 +36,7 @@ class AuthPage extends StatelessWidget {
                 width: double.infinity,
                 child: Text(
                   'パスワードを忘れた方はこちら >',
-                  style: TextStyle(color: Colors.blue),
+                  style: TextStyle(color: Colors.deepPurple),
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -55,6 +56,7 @@ class AuthPage extends StatelessWidget {
                           .user;
                       if (user != null) {
                         print('ユーザーを登録しました');
+                        showCloseOnlyDialog(context, 'ユーザーを登録しました');
                       } else {
                         showCloseOnlyDialog(
                             context, '予期せぬエラーが出ました。\nやり直してください。');
@@ -77,7 +79,8 @@ class AuthPage extends StatelessWidget {
                       showCloseOnlyDialog(context, '予期せぬエラーが出ました。\nやり直してください。');
                     }
                   },
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple),
                   child: const Text(
                     '会員登録',
                     style: TextStyle(color: Colors.white),
@@ -98,6 +101,12 @@ class AuthPage extends StatelessWidget {
                           .user;
                       if (user != null) {
                         print('ログイン成功');
+                        // 1) 指定した画面に遷移する
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const BottomNavigationPage();
+                          // 2) 実際に表示するページを指定する
+                        }));
                       } else {
                         print('ログイン失敗');
                         showCloseOnlyDialog(
@@ -115,7 +124,7 @@ class AuthPage extends StatelessWidget {
                   },
                   child: const Text(
                     'ログイン',
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(color: Colors.deepPurple),
                   )),
             ],
           ),
@@ -123,8 +132,4 @@ class AuthPage extends StatelessWidget {
       ),
     );
   }
-}
-
-class smallSizedbox {
-  const smallSizedbox();
 }

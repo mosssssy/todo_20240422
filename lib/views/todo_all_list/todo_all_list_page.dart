@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class MyPage extends StatelessWidget {
-  const MyPage({super.key});
+class TodoAllListPage extends StatelessWidget {
+  const TodoAllListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'マイページ',
+          'みんなのタスク',
           style: TextStyle(
             color: Colors.white,
           ),
