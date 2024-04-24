@@ -76,8 +76,8 @@ class AuthPage extends StatelessWidget {
                             .set({
                           'userName': '',
                           'imageUrl': '',
-                          'createdAt': DateTime.now(),
-                          'updatedAt': DateTime.now(),
+                          'createdAt': Timestamp.now(),
+                          'updatedAt': Timestamp.now(),
                         });
                       } else {
                         showCloseOnlyDialog(
@@ -130,7 +130,7 @@ class AuthPage extends StatelessWidget {
                             .collection('users')
                             .doc(user.uid)
                             .update({
-                          'updatedAt': DateTime.now(),
+                          'updatedAt': Timestamp.now(),
                         });
                       } else {
                         print('ログイン失敗');
