@@ -17,7 +17,15 @@ class EditEmailPage extends StatelessWidget {
     final TextEditingController passController = TextEditingController();
     emailController.text = myUserEmail;
     return Scaffold(
-      appBar: AppBar(title: const Text('メールアドレス変更')),
+      appBar: AppBar(
+        title: const Text(
+          'メールアドレス変更',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.deepPurple,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Form(
