@@ -53,7 +53,7 @@ class AddTaskPage extends StatelessWidget {
                   await FirebaseFirestore.instance
                       .collection('todos')
                       .add(addTodoData.toJson());
-                  showToast('タスク追加されました');
+                  showToast('タスクが追加されました');
                   taskNameController.clear();
                 },
               ),
