@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todo_20240422/common_widget/close_only_dialog.dart';
@@ -32,39 +31,37 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     userNameController.text = widget.userName;
-
-    // Widget previewWidget;
-    // if (image != null) {
-    //   previewWidget = ClipOval(
-    //     child: Image.file(
-    //       image!,
-    //       width: 200,
-    //       height: 200,
-    //       fit: BoxFit.cover,
-    //     ),
-    //   );
-    // } else {
-    //   //imageが null のとき
-    //   if (widget.imageUrl != '') {
-    //     previewWidget = ClipOval(
-    //       child: Image.network(
-    //         widget.imageUrl,
-    //         width: 200,
-    //         height: 200,
-    //         fit: BoxFit.cover,
-    //       ),
-    //     );
-    //   } else {
-    //     previewWidget = ClipOval(
-    //       child: Image.asset(
-    //         'assets/images/default_user_icon.png',
-    //         width: 200,
-    //         height: 200,
-    //         fit: BoxFit.cover,
-    //       ),
-    //     );
-    //   }
-    // }
+    Widget previewWidget;
+    if (image != null) {
+      previewWidget = ClipOval(
+        child: Image.file(
+          image!,
+          width: 200,
+          height: 200,
+          fit: BoxFit.cover,
+        ),
+      );
+    } else {
+      if (widget.imageUrl != '') {
+        // imageUrkが空文字のとき
+        previewWidget = ClipOval(
+          child: Image.network(
+            widget.imageUrl,
+            width: 200,
+            height: 200,
+            fit: BoxFit.cover,
+          ),
+        );
+      } else {
+        previewWidget = ClipOval(
+            child: Image.asset(
+          'assets/images/default_user_icon.png',
+          width: 200,
+          height: 200,
+          fit: BoxFit.cover,
+        ));
+      }
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -83,45 +80,45 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Stack(
-                    //   children: [
-
-                    //     if (widget.imageUrl != '')
-                    //       Positioned(
-                    //         top: 0,
-                    //         right: 0,
-                    //         child: CircleAvatar(
-                    //           backgroundColor: Colors.grey, // 背景色を設定
-                    //           child: IconButton(
-                    //             icon: const Icon(
-                    //               Icons.close,
-                    //               color: Colors.black,
-                    //             ), // アイコンを設定
-                    //             onPressed: () async {
-                    //               // ボタンがタップされたときの処理
-                    //               // 画像削除
-                    //               // 上記で取得したURLを使ってUserドキュメントを更新する
-                    //               await FirebaseFirestore.instance
-                    //                   .collection('users')
-                    //                   .doc(user.uid)
-                    //                   .update(
-                    //                 {
-                    //                   'imageUrl': '',
-                    //                   'updatedAt': DateTime.now(),
-                    //                 },
-                    //               );
-                    //               await FirebaseStorage.instance
-                    //                   .ref('userIcon/${user.uid}')
-                    //                   .delete();
-                    //               widget.imageUrl = '';
-                    //               showToast('画像削除しました');
-                    //               setState(() {});
-                    //             },
-                    //           ),
-                    //         ),
-                    //       ),
-                    //   ],
-                    // ),
+                    Stack(
+                      children: [
+                        previewWidget,
+                        if (widget.imageUrl != '')
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.grey, // 背景色を設定
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: Colors.black,
+                                ), // アイコンを設定
+                                onPressed: () async {
+                                  // ボタンがタップされたときの処理
+                                  // 画像削除
+                                  // 上記で取得したURLを使ってUserドキュメントを更新する
+                                  await FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(user.uid)
+                                      .update(
+                                    {
+                                      'imageUrl': '',
+                                      'updatedAt': DateTime.now(),
+                                    },
+                                  );
+                                  await FirebaseStorage.instance
+                                      .ref('userIcon/${user.uid}')
+                                      .delete();
+                                  widget.imageUrl = '';
+                                  showToast('画像削除しました');
+                                  setState(() {});
+                                },
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                     MarginSizedBox.mediumHeightMargin,
                     BlueButton(
                       buttonText: '画像を選択する',
@@ -131,23 +128,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       },
                     ),
                     MarginSizedBox.mediumHeightMargin,
-                    BlueButton(
-                        buttonText: '画像アップロード',
-                        onBlueButtonPressed: () async {
-                          if (image == null) {
-                            showToast('画像が選択されていません');
-                            return;
-                          }
-                          try {
-                            await FirebaseStorage.instance
-                                .ref('userIcon/${user.uid}')
-                                .putFile(image!);
-                            showToast('画像アップロード成功');
-                          } catch (error) {
-                            showCloseOnlyDialog(
-                                context, error.toString(), '画像アップロード失敗');
-                          }
-                        }),
                     TextFormField(
                         controller: userNameController,
                         maxLength: 12,
@@ -223,16 +203,4 @@ class _EditProfilePageState extends State<EditProfilePage> {
       });
     }
   }
-
-  // Future getImageFromCamera() async {
-  //   final pickedFile =
-  //       await picker.pickImage(source: ImageSource.camera); //カメラから画像を取得
-  //   setState(() {
-  //     //画面を再読込
-  //     if (pickedFile != null) {
-  //       //画像を取得できたときのみ実行
-  //       image = File(pickedFile.path); //取得した画像を代入
-  //     }
-  //   });
-  // }
 }
