@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_20240422/common_widget/confirm_dialog.dart';
 import 'package:todo_20240422/common_widget/margin_sizedbox.dart';
 import 'package:todo_20240422/data_models/user_data/todo/todo.dart';
 import 'package:todo_20240422/data_models/user_data/userdata.dart';
+import 'package:todo_20240422/functions/global_functions.dart';
 import 'package:todo_20240422/views/todo_all_list/add_task/add_task_page.dart';
 
 class TodoAllListPage extends StatelessWidget {
@@ -36,7 +38,7 @@ class TodoAllListPage extends StatelessWidget {
             .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.hasData == false) {
+          if (snapshot.hasData == false || snapshot.data == null) {
             return const SizedBox.shrink();
           }
           // 目標形： [{}, {}, {}]
@@ -65,7 +67,8 @@ class TodoAllListPage extends StatelessWidget {
                     builder: (context,
                         AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
                             userSnapshot) {
-                      if (userSnapshot.hasData == false) {
+                      if (userSnapshot.hasData == false ||
+                          userSnapshot.data == null) {
                         return Container();
                       }
                       final DocumentSnapshot<Map<String, dynamic>>
@@ -110,7 +113,19 @@ class TodoAllListPage extends StatelessWidget {
                         trailing: (todo.userId ==
                                 FirebaseAuth.instance.currentUser!.uid)
                             ? IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showConfirmDialog(
+                                      context: context,
+                                      text: '本当に削除しますか？',
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                        await FirebaseFirestore.instance
+                                            .collection('todos')
+                                            .doc(todo.todoId)
+                                            .delete();
+                                        showToast('削除成功しました');
+                                      });
+                                },
                                 icon: const Icon(
                                   Icons.delete,
                                   color: Colors.grey,

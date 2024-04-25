@@ -8,7 +8,9 @@ part 'todo.g.dart';
 class Todo with _$Todo {
   factory Todo({
     required String taskName,
+    required String todoId,
     required String userId,
+    required bool isConpleted,
     @TimestampConverter() required Timestamp createdAt,
     @TimestampConverter() required Timestamp updatedAt,
   }) = _Todo;

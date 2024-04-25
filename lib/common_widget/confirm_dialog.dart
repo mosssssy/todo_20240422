@@ -27,7 +27,7 @@ class ConfirmDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('確認'),
-      content: const Text('パスワード再設定メールを送信しますか？'),
+      content: Text(text),
       actions: [
         TextButton(
           onPressed: onPressed,

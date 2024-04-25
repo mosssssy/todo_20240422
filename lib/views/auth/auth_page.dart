@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_20240422/common_widget/close_only_dialog.dart';
 import 'package:todo_20240422/common_widget/margin_sizedbox.dart';
+import 'package:todo_20240422/data_models/user_data/userdata.dart';
 import 'package:todo_20240422/functions/global_functions.dart';
 import 'package:todo_20240422/views/auth/components/auth_text_form_field.dart';
 import 'package:todo_20240422/main.dart';
@@ -70,15 +71,17 @@ class AuthPage extends StatelessWidget {
                       if (user != null) {
                         showToast('ユーザーを登録しました！');
                         // FirebaseStore に userドキュメントを作成
+                        final UserData createUserData = UserData(
+                          userName: '',
+                          imageUrl: '',
+                          userId: user.uid,
+                          createdAt: Timestamp.now(),
+                          updatedAt: Timestamp.now(),
+                        );
                         FirebaseFirestore.instance
                             .collection('users')
                             .doc(user.uid)
-                            .set({
-                          'userName': '',
-                          'imageUrl': '',
-                          'createdAt': Timestamp.now(),
-                          'updatedAt': Timestamp.now(),
-                        });
+                            .set(createUserData.toJson());
                       } else {
                         showCloseOnlyDialog(
                             context, '予期せぬエラーが出ました。\nやり直してください。', '会員登録失敗');
