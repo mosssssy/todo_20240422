@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_20240422/common_widget/confirm_dialog.dart';
 import 'package:todo_20240422/common_widget/margin_sizedbox.dart';
 import 'package:todo_20240422/data_models/user_data/todo/todo.dart';
 import 'package:todo_20240422/data_models/user_data/userdata.dart';
-import 'package:todo_20240422/functions/global_functions.dart';
 import 'package:todo_20240422/views/todo_all_list/add_task/add_task_page.dart';
 
 class MyDoneTaskListPage extends StatelessWidget {
