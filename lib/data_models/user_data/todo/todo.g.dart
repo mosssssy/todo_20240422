@@ -6,20 +6,23 @@ part of 'todo.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Todo _$$_TodoFromJson(Map<String, dynamic> json) => _$_Todo(
+_$TodoImpl _$$TodoImplFromJson(Map<String, dynamic> json) => _$TodoImpl(
       taskName: json['taskName'] as String,
       todoId: json['todoId'] as String,
       userId: json['userId'] as String,
+      isCompleted: json['isCompleted'] as bool,
       createdAt:
           const TimestampConverter().fromJson(json['createdAt'] as Timestamp),
       updatedAt:
           const TimestampConverter().fromJson(json['updatedAt'] as Timestamp),
     );
 
-Map<String, dynamic> _$$_TodoToJson(_$_Todo instance) => <String, dynamic>{
+Map<String, dynamic> _$$TodoImplToJson(_$TodoImpl instance) =>
+    <String, dynamic>{
       'taskName': instance.taskName,
       'todoId': instance.todoId,
       'userId': instance.userId,
+      'isCompleted': instance.isCompleted,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
       'updatedAt': const TimestampConverter().toJson(instance.updatedAt),
     };

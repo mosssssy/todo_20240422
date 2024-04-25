@@ -12,7 +12,7 @@ part of 'todo.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Todo _$TodoFromJson(Map<String, dynamic> json) {
   return _Todo.fromJson(json);
@@ -22,7 +22,8 @@ Todo _$TodoFromJson(Map<String, dynamic> json) {
 mixin _$Todo {
   String get taskName => throw _privateConstructorUsedError;
   String get todoId => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError; //投稿者のユーザーID
+  String get userId => throw _privateConstructorUsedError;
+  bool get isCompleted => throw _privateConstructorUsedError;
   @TimestampConverter()
   Timestamp get createdAt => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -42,6 +43,7 @@ abstract class $TodoCopyWith<$Res> {
       {String taskName,
       String todoId,
       String userId,
+      bool isCompleted,
       @TimestampConverter() Timestamp createdAt,
       @TimestampConverter() Timestamp updatedAt});
 }
@@ -62,6 +64,7 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
     Object? taskName = null,
     Object? todoId = null,
     Object? userId = null,
+    Object? isCompleted = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -78,6 +81,10 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      isCompleted: null == isCompleted
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -91,23 +98,26 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
 }
 
 /// @nodoc
-abstract class _$$_TodoCopyWith<$Res> implements $TodoCopyWith<$Res> {
-  factory _$$_TodoCopyWith(_$_Todo value, $Res Function(_$_Todo) then) =
-      __$$_TodoCopyWithImpl<$Res>;
+abstract class _$$TodoImplCopyWith<$Res> implements $TodoCopyWith<$Res> {
+  factory _$$TodoImplCopyWith(
+          _$TodoImpl value, $Res Function(_$TodoImpl) then) =
+      __$$TodoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String taskName,
       String todoId,
       String userId,
+      bool isCompleted,
       @TimestampConverter() Timestamp createdAt,
       @TimestampConverter() Timestamp updatedAt});
 }
 
 /// @nodoc
-class __$$_TodoCopyWithImpl<$Res> extends _$TodoCopyWithImpl<$Res, _$_Todo>
-    implements _$$_TodoCopyWith<$Res> {
-  __$$_TodoCopyWithImpl(_$_Todo _value, $Res Function(_$_Todo) _then)
+class __$$TodoImplCopyWithImpl<$Res>
+    extends _$TodoCopyWithImpl<$Res, _$TodoImpl>
+    implements _$$TodoImplCopyWith<$Res> {
+  __$$TodoImplCopyWithImpl(_$TodoImpl _value, $Res Function(_$TodoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -116,10 +126,11 @@ class __$$_TodoCopyWithImpl<$Res> extends _$TodoCopyWithImpl<$Res, _$_Todo>
     Object? taskName = null,
     Object? todoId = null,
     Object? userId = null,
+    Object? isCompleted = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(_$_Todo(
+    return _then(_$TodoImpl(
       taskName: null == taskName
           ? _value.taskName
           : taskName // ignore: cast_nullable_to_non_nullable
@@ -132,6 +143,10 @@ class __$$_TodoCopyWithImpl<$Res> extends _$TodoCopyWithImpl<$Res, _$_Todo>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      isCompleted: null == isCompleted
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -146,15 +161,17 @@ class __$$_TodoCopyWithImpl<$Res> extends _$TodoCopyWithImpl<$Res, _$_Todo>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Todo implements _Todo {
-  _$_Todo(
+class _$TodoImpl implements _Todo {
+  _$TodoImpl(
       {required this.taskName,
       required this.todoId,
       required this.userId,
+      required this.isCompleted,
       @TimestampConverter() required this.createdAt,
       @TimestampConverter() required this.updatedAt});
 
-  factory _$_Todo.fromJson(Map<String, dynamic> json) => _$$_TodoFromJson(json);
+  factory _$TodoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TodoImplFromJson(json);
 
   @override
   final String taskName;
@@ -162,7 +179,8 @@ class _$_Todo implements _Todo {
   final String todoId;
   @override
   final String userId;
-//投稿者のユーザーID
+  @override
+  final bool isCompleted;
   @override
   @TimestampConverter()
   final Timestamp createdAt;
@@ -172,18 +190,20 @@ class _$_Todo implements _Todo {
 
   @override
   String toString() {
-    return 'Todo(taskName: $taskName, todoId: $todoId, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Todo(taskName: $taskName, todoId: $todoId, userId: $userId, isCompleted: $isCompleted, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Todo &&
+            other is _$TodoImpl &&
             (identical(other.taskName, taskName) ||
                 other.taskName == taskName) &&
             (identical(other.todoId, todoId) || other.todoId == todoId) &&
             (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.isCompleted, isCompleted) ||
+                other.isCompleted == isCompleted) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -192,18 +212,18 @@ class _$_Todo implements _Todo {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, taskName, todoId, userId, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType, taskName, todoId, userId, isCompleted, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TodoCopyWith<_$_Todo> get copyWith =>
-      __$$_TodoCopyWithImpl<_$_Todo>(this, _$identity);
+  _$$TodoImplCopyWith<_$TodoImpl> get copyWith =>
+      __$$TodoImplCopyWithImpl<_$TodoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TodoToJson(
+    return _$$TodoImplToJson(
       this,
     );
   }
@@ -214,10 +234,11 @@ abstract class _Todo implements Todo {
       {required final String taskName,
       required final String todoId,
       required final String userId,
+      required final bool isCompleted,
       @TimestampConverter() required final Timestamp createdAt,
-      @TimestampConverter() required final Timestamp updatedAt}) = _$_Todo;
+      @TimestampConverter() required final Timestamp updatedAt}) = _$TodoImpl;
 
-  factory _Todo.fromJson(Map<String, dynamic> json) = _$_Todo.fromJson;
+  factory _Todo.fromJson(Map<String, dynamic> json) = _$TodoImpl.fromJson;
 
   @override
   String get taskName;
@@ -225,7 +246,9 @@ abstract class _Todo implements Todo {
   String get todoId;
   @override
   String get userId;
-  @override //投稿者のユーザーID
+  @override
+  bool get isCompleted;
+  @override
   @TimestampConverter()
   Timestamp get createdAt;
   @override
@@ -233,5 +256,6 @@ abstract class _Todo implements Todo {
   Timestamp get updatedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_TodoCopyWith<_$_Todo> get copyWith => throw _privateConstructorUsedError;
+  _$$TodoImplCopyWith<_$TodoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

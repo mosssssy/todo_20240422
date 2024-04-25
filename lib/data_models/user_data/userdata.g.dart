@@ -6,7 +6,8 @@ part of 'userdata.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UserData _$$_UserDataFromJson(Map<String, dynamic> json) => _$_UserData(
+_$UserDataImpl _$$UserDataImplFromJson(Map<String, dynamic> json) =>
+    _$UserDataImpl(
       userName: json['userName'] as String,
       imageUrl: json['imageUrl'] as String,
       userId: json['userId'] as String,
@@ -16,7 +17,7 @@ _$_UserData _$$_UserDataFromJson(Map<String, dynamic> json) => _$_UserData(
           const TimestampConverter().fromJson(json['updatedAt'] as Timestamp),
     );
 
-Map<String, dynamic> _$$_UserDataToJson(_$_UserData instance) =>
+Map<String, dynamic> _$$UserDataImplToJson(_$UserDataImpl instance) =>
     <String, dynamic>{
       'userName': instance.userName,
       'imageUrl': instance.imageUrl,

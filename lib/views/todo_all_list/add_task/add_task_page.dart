@@ -52,7 +52,7 @@ class AddTaskPage extends StatelessWidget {
                     createdAt: Timestamp.now(),
                     updatedAt: Timestamp.now(),
                     todoId: uuid,
-                    isConpleted: false,
+                    isCompleted: false,
                   );
                   await FirebaseFirestore.instance
                       .collection('todos')
